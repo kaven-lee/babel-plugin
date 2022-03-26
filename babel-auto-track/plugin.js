@@ -1,13 +1,20 @@
 const { declare } = require('@babel/helper-plugin-utils');
 const importModule = require('@babel/helper-module-imports');
 
+
+// api 可以拿到 types、template 等常用包的 api
+// options 传进来的参数
 module.exports = declare((api, options) => {
   api.assertVersion(7);
 
   return {
+    // 在 traverse（遍历）AST 的时候，调用注册的 visitor
     visitor: {
       Program: {
+        // path 是遍历过程中的路径，会保留上下文信息，有很多属性和方法
+        // state 则是遍历过程中在不同节点之间传递数据的机制 （共享数据）
         enter(path, state) {
+          // 手动遍历子节点
           path.traverse({
             ImportDeclaration(impPath) {
               // 判断是否有track引入包 如果有把名字放到state 然后结束遍历
