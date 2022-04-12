@@ -66,8 +66,6 @@ module.exports = declare((api, options) => {
           currentNode = variablePath.node;
         }
         if (currentNode.leadingComments?.length > 0 && /@track-ignore/.test(currentNode.leadingComments[0].value)) {
-          delete currentNode.leadingComments;
-          delete currentNode.trailingComments;
           return;
         }
 
