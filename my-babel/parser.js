@@ -1,7 +1,7 @@
 const acorn = require("acorn");
 
 const syntaxPlugins = {
-  'literal': require('./plugins/literal'),
+  'literal': require('./acorn-plugins/literal'),
 }
 
 const defaultOptions = {

@@ -1,5 +1,6 @@
 const { parse } = require('./parser');
-const traverse =  require('./traverse')
+const traverse = require('./traverse')
+const generate = require('./generator')
 const path = require('path');
 const fs = require('fs');
 
@@ -10,9 +11,13 @@ const ast = parse(sourceCode, {
 });
 
 traverse(ast, {
-  Identifier(node) {
-      node.name = 'b';
+  Identifier(path) {
+    path.node.name = 'b';
   }
 });
+
+const { code, map } = generate(ast, sourceCode, 'sourceCode');
+
+fs.writeFileSync(path.join(__dirname, './target.js'), code);
 
 console.log(ast.body[0].declarations[0])
